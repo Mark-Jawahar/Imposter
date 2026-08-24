@@ -30,7 +30,7 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-            className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-3xl glass-panel p-6 shadow-2xl border border-white/10 text-slate-100"
+            className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl glass-panel p-6 shadow-2xl border border-white/10 text-slate-100"
           >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
@@ -38,11 +38,11 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
                 <div className="w-9 h-9 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-violet-400">
                   <HelpCircle className="w-5 h-5" />
                 </div>
-                <h3 className="text-xl font-bold tracking-tight text-white">How to Play</h3>
+                <h3 className="text-xl font-display font-bold tracking-tight text-white">How to Play</h3>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                className="p-2 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors btn-press"
                 aria-label="Close rules"
               >
                 <X className="w-5 h-5" />
@@ -50,9 +50,9 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
             </div>
 
             {/* Content Steps */}
-            <div className="space-y-4 text-sm text-slate-300">
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex gap-3.5 items-start">
-                <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center shrink-0 text-sm">
+            <div className="space-y-4 text-sm text-slate-300 font-ui">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/4 flex gap-3 items-start">
+                <div className="w-7 h-7 rounded-xl bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center shrink-0 text-sm">
                   1
                 </div>
                 <div>
@@ -65,8 +65,8 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex gap-3.5 items-start">
-                <div className="w-8 h-8 rounded-xl bg-violet-500/20 text-violet-400 font-bold flex items-center justify-center shrink-0 text-sm">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/4 flex gap-3 items-start">
+                <div className="w-7 h-7 rounded-xl bg-violet-500/20 text-violet-400 font-bold flex items-center justify-center shrink-0 text-sm">
                   2
                 </div>
                 <div>
@@ -79,8 +79,8 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex gap-3.5 items-start">
-                <div className="w-8 h-8 rounded-xl bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0 text-sm">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/4 flex gap-3 items-start">
+                <div className="w-7 h-7 rounded-xl bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0 text-sm">
                   3
                 </div>
                 <div>
@@ -93,8 +93,8 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex gap-3.5 items-start">
-                <div className="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 font-bold flex items-center justify-center shrink-0 text-sm">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/4 flex gap-3 items-start">
+                <div className="w-7 h-7 rounded-xl bg-rose-500/20 text-rose-400 font-bold flex items-center justify-center shrink-0 text-sm">
                   4
                 </div>
                 <div>
@@ -107,36 +107,32 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex gap-3.5 items-start">
-                <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0 text-sm">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/4 flex gap-3 items-start">
+                <div className="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-sm">
                   5
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-0.5 flex items-center gap-1.5">
-                    <Trophy className="w-4 h-4 text-amber-400" /> Reveal & Final Guess
+                    <Trophy className="w-4 h-4 text-emerald-400" /> Reveal & Score
                   </h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    If the Imposter is caught, they get <strong className="text-amber-400">ONE FINAL CHANCE</strong> to guess the secret word!
+                    Results are revealed. If Imposters are caught, normal players win. If they survive, Imposters win. Tap <strong className="text-white">Next Word</strong> to play again!
                   </p>
                 </div>
               </div>
 
               {/* Scoring breakdown box */}
-              <div className="p-4 rounded-2xl bg-violet-950/30 border border-violet-500/20 text-xs space-y-1.5 text-slate-300">
-                <div className="font-semibold text-violet-300 uppercase tracking-wider text-[11px] mb-1">
+              <div className="p-4 rounded-xl bg-violet-950/25 border border-violet-500/15 text-xs space-y-1.5 text-slate-300 font-ui">
+                <div className="font-semibold text-violet-300 uppercase tracking-wider text-[10px] mb-1">
                   Scoring Rules
                 </div>
                 <div className="flex justify-between">
                   <span>Normal players catch the Imposter:</span>
-                  <span className="font-bold text-emerald-400">+2 pts</span>
+                  <span className="font-bold text-emerald-400">+2 pts each</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Imposter survives without being caught:</span>
-                  <span className="font-bold text-violet-400">+2 pts</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Caught Imposter correctly guesses the secret word:</span>
-                  <span className="font-bold text-amber-400">+3 pts</span>
+                  <span className="font-bold text-violet-400">+2 pts each</span>
                 </div>
               </div>
             </div>

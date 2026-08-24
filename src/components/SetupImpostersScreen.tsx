@@ -16,20 +16,20 @@ export const SetupImpostersScreen: React.FC = () => {
 
   const getRecommendedCount = () => {
     if (playerCount <= 6) return 1;
-    if (playerCount <= 10) return 1; // 1 or 2
+    if (playerCount <= 10) return 1;
     return 2;
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-4 py-4 max-w-md mx-auto w-full">
+    <div className="flex-1 flex flex-col justify-between px-4 py-4 max-w-md mx-auto w-full safe-bottom">
       {/* Top Navigation */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => setPhase('setup-players')}
-            className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+            className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors btn-press"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Players
+            <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <span className="text-xs font-bold uppercase tracking-widest text-violet-400 font-mono">
             Step 2 of 3
@@ -37,12 +37,12 @@ export const SetupImpostersScreen: React.FC = () => {
         </div>
 
         <div className="mb-6">
-          <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <h2 className="text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
             <Skull className="w-6 h-6 text-rose-500" />
             Number of Imposters
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Choose how many liars will be secretly hiding among your {playerCount} players.
+            Choose how many liars hide among your {playerCount} players.
           </p>
         </div>
 
@@ -56,26 +56,26 @@ export const SetupImpostersScreen: React.FC = () => {
             return (
               <motion.button
                 key={count}
-                whileTap={isAllowed ? { scale: 0.96 } : undefined}
+                whileTap={isAllowed ? { scale: 0.97 } : undefined}
                 onClick={() => isAllowed && setImposterCount(count)}
                 disabled={!isAllowed}
-                className={`relative p-4 rounded-3xl text-left transition-all border ${
+                className={`relative p-4 rounded-2xl text-left transition-all border ${
                   isSelected
-                    ? 'bg-rose-950/40 border-rose-500/80 shadow-lg shadow-rose-900/20'
+                    ? 'bg-rose-950/30 border-rose-500/60 shadow-lg shadow-rose-900/20'
                     : isAllowed
-                    ? 'glass-card border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
-                    : 'bg-white/[0.01] border-white/5 opacity-30 cursor-not-allowed'
+                    ? 'glass-card border-white/8 hover:border-white/15 hover:bg-white/[0.03]'
+                    : 'bg-white/[0.01] border-white/4 opacity-30 cursor-not-allowed'
                 }`}
               >
                 {/* Recommended Badge */}
                 {isRecommended && isAllowed && (
-                  <span className="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-amber-500 text-slate-950 shadow">
+                  <span className="absolute -top-2 right-3 px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase bg-amber-500 text-slate-950 shadow">
                     Best Match
                   </span>
                 )}
 
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     {Array.from({ length: count }).map((_, i) => (
                       <span key={i} className="text-lg">🕵️</span>
                     ))}
@@ -87,19 +87,19 @@ export const SetupImpostersScreen: React.FC = () => {
                   )}
                 </div>
 
-                <div className="text-xl font-black text-white font-mono">
+                <div className="text-lg font-bold text-white font-mono">
                   {count} {count === 1 ? 'Imposter' : 'Imposters'}
                 </div>
 
-                <p className="text-[11px] text-slate-400 mt-1">
-                  {count === 1 && 'Classic high tension setup'}
-                  {count === 2 && 'Deceptive teamwork and chaos'}
-                  {count === 3 && 'High difficulty social deduction'}
-                  {count === 4 && 'Maximum pandemonium'}
+                <p className="text-[10px] text-slate-400 mt-1 font-ui">
+                  {count === 1 && 'Classic high tension'}
+                  {count === 2 && 'Deceptive teamwork'}
+                  {count === 3 && 'High difficulty'}
+                  {count === 4 && 'Maximum chaos'}
                 </p>
 
                 {!isAllowed && (
-                  <p className="text-[10px] text-rose-400/80 mt-2 font-medium">
+                  <p className="text-[9px] text-rose-400/70 mt-2 font-medium font-ui">
                     Requires {count * 3 + 1}+ players
                   </p>
                 )}
@@ -109,11 +109,11 @@ export const SetupImpostersScreen: React.FC = () => {
         </div>
 
         {/* Ratio Balance Helper Card */}
-        <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
+        <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 flex items-start gap-3">
           <ShieldAlert className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
-          <div className="text-xs text-slate-400">
-            <span className="font-semibold text-slate-200">Balance Breakdown: </span>
-            {currentCount} Imposter{currentCount > 1 ? 's' : ''} vs {playerCount - currentCount} Innocent Players.
+          <div className="text-xs text-slate-400 font-ui">
+            <span className="font-semibold text-slate-200">Balance: </span>
+            {currentCount} Imposter{currentCount > 1 ? 's' : ''} vs {playerCount - currentCount} Innocents.
           </div>
         </div>
       </div>
@@ -126,6 +126,7 @@ export const SetupImpostersScreen: React.FC = () => {
           fullWidth
           onClick={() => setPhase('setup-topic')}
           icon={<ArrowRight className="w-5 h-5" />}
+          iconPosition="right"
         >
           Next: Choose Topic
         </Button>

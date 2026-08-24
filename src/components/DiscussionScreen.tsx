@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 
 export const DiscussionScreen: React.FC = () => {
   const { setPhase, state, selectedTopic } = useGame();
-  const [timerSeconds, setTimerSeconds] = useState(120); // 2 minutes default
+  const [timerSeconds, setTimerSeconds] = useState(120);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -43,18 +43,18 @@ export const DiscussionScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-4 py-4 max-w-md mx-auto w-full text-center">
+    <div className="flex-1 flex flex-col justify-between px-4 py-4 max-w-md mx-auto w-full text-center safe-bottom">
       {/* Top Header */}
       <div>
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-300 text-xs font-semibold tracking-wide backdrop-blur-md mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold tracking-wide backdrop-blur-md mb-3">
           <MessageSquare className="w-3.5 h-3.5" />
           <span>Verbal Clues Discussion</span>
         </div>
 
-        <h2 className="text-3xl font-black text-white tracking-tight">
+        <h2 className="text-2xl font-display font-bold text-white tracking-tight">
           Everyone Ready?
         </h2>
-        <p className="text-base text-violet-300 font-medium mt-1">
+        <p className="text-sm text-violet-300 font-medium mt-1 font-ui">
           Put the phone down and give your clues!
         </p>
       </div>
@@ -62,73 +62,73 @@ export const DiscussionScreen: React.FC = () => {
       {/* Center Guideline Card & Optional Timer */}
       <div className="my-auto py-4 space-y-4">
         {/* Offline Clue Guidelines */}
-        <div className="rounded-3xl glass-panel p-5 border border-white/10 text-left space-y-3 shadow-xl">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+        <div className="rounded-2xl glass-panel p-4 border border-white/8 text-left space-y-3 shadow-lg">
+          <div className="flex items-center justify-between border-b border-white/8 pb-2.5">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-300 font-ui">
               How Discussion Works
             </span>
-            <span className="text-xs text-violet-400 font-medium">
+            <span className="text-xs text-violet-400 font-medium font-ui">
               {selectedTopic?.icon} {selectedTopic?.name}
             </span>
           </div>
 
-          <div className="space-y-2.5 text-xs text-slate-300">
+          <div className="space-y-2 text-xs text-slate-300 font-ui">
             <div className="flex items-start gap-2.5">
-              <span className="w-5 h-5 rounded-full bg-violet-600/30 text-violet-300 font-bold flex items-center justify-center shrink-0 text-[11px]">
+              <span className="w-5 h-5 rounded-full bg-violet-600/25 text-violet-300 font-bold flex items-center justify-center shrink-0 text-[10px]">
                 1
               </span>
               <p>
-                Take turns clockwise giving <strong>one verbal clue</strong>.
+                Take turns clockwise giving <strong className="text-white">one verbal clue</strong>.
               </p>
             </div>
 
             <div className="flex items-start gap-2.5">
-              <span className="w-5 h-5 rounded-full bg-violet-600/30 text-violet-300 font-bold flex items-center justify-center shrink-0 text-[11px]">
+              <span className="w-5 h-5 rounded-full bg-violet-600/25 text-violet-300 font-bold flex items-center justify-center shrink-0 text-[10px]">
                 2
               </span>
               <p>
-                <strong>Normal players:</strong> Prove you know the word without making it too easy for the Imposter.
+                <strong className="text-white">Normal players:</strong> Prove you know the word without making it too easy for the Imposter.
               </p>
             </div>
 
             <div className="flex items-start gap-2.5">
-              <span className="w-5 h-5 rounded-full bg-rose-600/30 text-rose-300 font-bold flex items-center justify-center shrink-0 text-[11px]">
+              <span className="w-5 h-5 rounded-full bg-rose-600/25 text-rose-300 font-bold flex items-center justify-center shrink-0 text-[10px]">
                 3
               </span>
               <p>
-                <strong>Imposter ({state.settings.imposterCount}):</strong> Use your clue, blend in, and guess what others are referencing!
+                <strong className="text-rose-400">Imposter ({state.settings.imposterCount}):</strong> Use your clue, blend in, and guess what others are referencing!
               </p>
             </div>
           </div>
         </div>
 
         {/* Optional Timer */}
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3.5 flex items-center justify-between">
+        <div className="rounded-2xl bg-white/[0.02] border border-white/5 p-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-violet-600/20 flex items-center justify-center text-violet-400 font-mono font-bold text-sm">
-              <Clock className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-violet-600/15 flex items-center justify-center text-violet-400 font-mono font-bold text-sm">
+              <Clock className="w-4.5 h-4.5" />
             </div>
             <div className="text-left">
-              <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+              <div className="text-[9px] text-slate-400 font-semibold uppercase tracking-wider font-ui">
                 Party Timer (Optional)
               </div>
-              <div className={`text-xl font-black font-mono tracking-wider ${timerSeconds <= 10 && timerSeconds > 0 ? 'text-rose-400 animate-pulse' : 'text-white'}`}>
+              <div className={`text-lg font-bold font-mono tracking-wider ${timerSeconds <= 10 && timerSeconds > 0 ? 'text-rose-400 animate-pulse-subtle' : 'text-white'}`}>
                 {formatTime(timerSeconds)}
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             <button
               onClick={toggleTimer}
-              className="p-2 rounded-xl bg-violet-600/30 hover:bg-violet-600/50 text-violet-300 transition-colors"
+              className="p-2 rounded-xl bg-violet-600/25 hover:bg-violet-600/40 text-violet-300 transition-colors btn-press"
               title={isRunning ? 'Pause' : 'Start'}
             >
               {isRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
             </button>
             <button
               onClick={() => resetTimer(120)}
-              className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/8 text-slate-400 hover:text-white transition-colors btn-press"
               title="Reset 2m"
             >
               <RotateCcw className="w-4 h-4" />
@@ -146,7 +146,7 @@ export const DiscussionScreen: React.FC = () => {
           onClick={() => setPhase('voting')}
           icon={<Vote className="w-5 h-5" />}
         >
-          Start Private Voting
+          Start Voting
         </Button>
       </div>
     </div>

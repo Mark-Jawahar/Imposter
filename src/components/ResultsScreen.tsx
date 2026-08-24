@@ -24,18 +24,18 @@ export const ResultsScreen: React.FC = () => {
   }, [state.roundWinner, calculateVoteResults]);
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-4 py-4 max-w-md mx-auto w-full text-center">
+    <div className="flex-1 flex flex-col justify-between px-4 py-4 max-w-md mx-auto w-full text-center safe-bottom">
       {/* Top Header */}
       <div>
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs font-semibold tracking-wide backdrop-blur-md mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-semibold tracking-wide backdrop-blur-md mb-3">
           <Skull className="w-3.5 h-3.5" />
           <span>Vote Results & Reveal</span>
         </div>
 
-        <h2 className="text-3xl font-black text-white tracking-tight">
+        <h2 className="text-2xl font-display font-bold text-white tracking-tight">
           Who Was The Liar?
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-400 mt-1 font-ui">
           Secret Word: <strong className="text-white font-mono">{state.currentRound?.secretWord}</strong>
         </p>
       </div>
@@ -44,41 +44,41 @@ export const ResultsScreen: React.FC = () => {
       <div className="my-auto py-3 space-y-4">
         {/* Imposter Reveal Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          className={`rounded-3xl p-5 border text-center shadow-xl ${
+          className={`rounded-2xl p-5 border text-center shadow-lg ${
             isAnyImposterCaught
-              ? 'bg-emerald-950/30 border-emerald-500/40 glow-purple'
-              : 'bg-rose-950/30 border-rose-500/40 glow-crimson'
+              ? 'bg-emerald-950/25 border-emerald-500/30'
+              : 'bg-rose-950/25 border-rose-500/30'
           }`}
         >
-          <div className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">
+          <div className="text-xs uppercase tracking-widest text-slate-400 font-bold mb-1 font-ui">
             {imposterNames.length > 1 ? 'The Imposters Were' : 'The Imposter Was'}
           </div>
-          <div className="text-2xl font-black text-white font-mono tracking-wide mb-2">
+          <div className="text-xl font-display font-bold text-white font-mono tracking-wide mb-2">
             🕵️ {imposterNames.join(', ')}
           </div>
 
           <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
-            isAnyImposterCaught ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+            isAnyImposterCaught ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/20' : 'bg-rose-500/15 text-rose-300 border border-rose-500/20'
           }`}>
             {isAnyImposterCaught ? (
               <>
                 <CheckCircle className="w-4 h-4 text-emerald-400" />
-                <span>Imposter Caught by Players! (+2 pts)</span>
+                <span>Imposter Caught! (+2 pts each)</span>
               </>
             ) : (
               <>
                 <XCircle className="w-4 h-4 text-rose-400" />
-                <span>Imposter Survived the Vote! (+2 pts)</span>
+                <span>Imposter Survived! (+2 pts each)</span>
               </>
             )}
           </div>
         </motion.div>
 
         {/* Vote Breakdown List */}
-        <div className="rounded-3xl glass-panel p-4 border border-white/10 text-left space-y-2">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 px-1">
+        <div className="rounded-2xl glass-panel p-4 border border-white/8 text-left space-y-2">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 px-1 font-ui">
             Ballot Tally
           </div>
 
@@ -90,12 +90,12 @@ export const ResultsScreen: React.FC = () => {
               return (
                 <div
                   key={res.playerId}
-                  className="flex items-center justify-between px-3 py-2 rounded-2xl bg-white/[0.03] border border-white/5 text-xs"
+                  className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.02] border border-white/4 text-xs font-ui"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-white">{player?.name}</span>
+                    <span className="font-semibold text-white">{player?.name}</span>
                     {isImp && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                      <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-rose-500/15 text-rose-300 border border-rose-500/20 font-ui">
                         Imposter
                       </span>
                     )}
@@ -112,7 +112,7 @@ export const ResultsScreen: React.FC = () => {
       </div>
 
       {/* Bottom Action Area */}
-      <div className="space-y-2.5 pt-2">
+      <div className="space-y-2 pt-2">
         {/* Primary CTA: Next Word */}
         <Button
           variant="primary"
@@ -120,6 +120,7 @@ export const ResultsScreen: React.FC = () => {
           fullWidth
           onClick={() => startNextRound(true)}
           icon={<ArrowRight className="w-5 h-5" />}
+          iconPosition="right"
         >
           Next Word
         </Button>
@@ -127,7 +128,7 @@ export const ResultsScreen: React.FC = () => {
         {/* Secondary Action: View Scoreboard */}
         <Button
           variant="secondary"
-          size="lg"
+          size="md"
           fullWidth
           onClick={() => setPhase('scoreboard')}
           icon={<Trophy className="w-4 h-4 text-amber-400" />}

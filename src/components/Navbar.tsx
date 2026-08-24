@@ -29,18 +29,18 @@ export const Navbar: React.FC = () => {
           onClick={() => state.phase === 'home' ? null : handleExitClick()}
           className="flex items-center gap-2.5 cursor-pointer group"
         >
-          <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-rose-500 p-[1.5px] shadow-lg shadow-violet-600/20 group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-[#0d0f18] rounded-[14px] flex items-center justify-center font-black text-xs tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-rose-400">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-rose-500 p-[1.5px] shadow-lg shadow-violet-600/20 group-hover:scale-105 transition-transform">
+            <div className="w-full h-full bg-[#0d0f18] rounded-[12px] flex items-center justify-center font-black text-xs tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-rose-400">
               IMP
             </div>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-sm tracking-widest text-white uppercase font-mono">
+              <span className="font-display font-extrabold text-sm tracking-widest text-white uppercase font-mono">
                 IMPOSTER
               </span>
               {state.gameHistory.length > 0 && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-violet-950/80 text-violet-300 border border-violet-800/40">
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-violet-950/80 text-violet-300 border border-violet-800/40 font-mono">
                   R{state.gameHistory.length + 1}
                 </span>
               )}
@@ -49,12 +49,12 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Right: Quick Action Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1 sm:gap-1.5">
           {/* Scoreboard shortcut mid-game */}
           {state.phase !== 'home' && state.phase !== 'scoreboard' && (
             <button
               onClick={() => setPhase('scoreboard')}
-              className="w-9 h-9 rounded-xl glass-button flex items-center justify-center text-amber-400 hover:text-amber-300 transition-colors"
+              className="w-8 h-8 rounded-xl glass-button flex items-center justify-center text-amber-400 hover:text-amber-300 transition-colors btn-press"
               title="View Scoreboard"
               aria-label="View Scoreboard"
             >
@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
           {/* Rules Button */}
           <button
             onClick={() => setShowRules(true)}
-            className="w-9 h-9 rounded-xl glass-button flex items-center justify-center text-slate-400 hover:text-slate-200 transition-colors"
+            className="w-8 h-8 rounded-xl glass-button flex items-center justify-center text-slate-400 hover:text-slate-200 transition-colors btn-press"
             title="How to play"
             aria-label="How to play"
           >
@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
           {state.phase !== 'home' && (
             <button
               onClick={handleExitClick}
-              className="w-9 h-9 rounded-xl glass-button flex items-center justify-center text-rose-400/80 hover:text-rose-400 transition-colors"
+              className="w-8 h-8 rounded-xl glass-button flex items-center justify-center text-rose-400/80 hover:text-rose-400 transition-colors btn-press"
               title="Exit Game"
               aria-label="Exit Game"
             >

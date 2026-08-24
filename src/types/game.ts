@@ -36,6 +36,7 @@ export interface RoundData {
   imposterClue: string;
   imposterIndices: number[];
   usedWords: string[];
+  skippedWords: string[];
 }
 
 export interface VoteResult {
