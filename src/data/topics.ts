@@ -1,10 +1,12 @@
 import { Topic } from '@/types/game';
 import { TAMIL_MOVIES } from './tamilMovies';
+import { selectClueForMovie } from './clueSystem';
 
 export interface WordCluePair {
   word: string;
   clue: string;
   hint?: string;
+  movieId?: string;
 }
 
 export interface TopicData {
@@ -16,18 +18,23 @@ export interface TopicData {
   words: WordCluePair[];
 }
 
+const buildTamilMovieWords = (usedCluesInSession: string[] = []): WordCluePair[] => {
+  return TAMIL_MOVIES.map((movie) => ({
+    word: movie.title.toUpperCase(),
+    clue: selectClueForMovie(movie.id, movie.title, usedCluesInSession),
+    hint: `${movie.year} \u2022 ${movie.actor} \u2022 Dir. ${movie.director}`,
+    movieId: movie.id,
+  }));
+};
+
 export const TOPICS: TopicData[] = [
   {
     id: 'tamil-movies',
-    name: 'Tamil Movies (2000–Present)',
-    icon: '🎬',
+    name: 'Tamil Movies (2000\u2013Present)',
+    icon: '\uD83C\uDFAF',
     description: 'Iconic Kollywood hits, blockbuster stars & memorable cinema moments',
     category: 'special',
-    words: TAMIL_MOVIES.map((movie) => ({
-      word: movie.title.toUpperCase(),
-      clue: movie.clueTags[0].toUpperCase(),
-      hint: `${movie.year} • ${movie.actor} • Dir. ${movie.director}`,
-    })),
+    words: buildTamilMovieWords(),
   },
   {
     id: 'indian-food',

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { Player, Topic, GameSettings, RoundData, VoteResult, GameState, GamePhase, RoundHistory } from '@/types/game';
 import { TOPICS, TopicData, WordCluePair } from '@/data/topics';
+import { selectClueForMovie } from '@/data/clueSystem';
 
 interface GameContextType {
   state: GameState;
@@ -60,6 +61,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Migration: ensure skippedWords exists
         if (parsed.currentRound && !parsed.currentRound.skippedWords) {
           parsed.currentRound.skippedWords = [];
+        }
+        // Migration: ensure usedClues exists
+        if (parsed.currentRound && !parsed.currentRound.usedClues) {
+          parsed.currentRound.usedClues = [];
         }
         return parsed;
       }
@@ -177,12 +182,25 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }));
   }, []);
 
-  const pickRandomWord = useCallback((topic: TopicData, usedWords: string[], skippedWords: string[]): WordCluePair => {
+  const pickRandomWord = useCallback((
+    topic: TopicData, 
+    usedWords: string[], 
+    skippedWords: string[], 
+    usedClues: string[] = []
+  ): WordCluePair => {
     const excluded = [...new Set([...usedWords, ...skippedWords])];
     const available = topic.words.filter((w) => !excluded.includes(w.word));
     const pool = available.length > 0 ? available : topic.words;
     const randomIndex = Math.floor(Math.random() * pool.length);
-    return pool[randomIndex];
+    const selected = pool[randomIndex];
+    
+    // For Tamil Movies, generate dynamic indirect clue
+    if (topic.id === 'tamil-movies' && selected.movieId) {
+      const dynamicClue = selectClueForMovie(selected.movieId, selected.word, usedClues);
+      return { ...selected, clue: dynamicClue };
+    }
+    
+    return selected;
   }, []);
 
   const pickImposterIndices = useCallback((playerCount: number, imposterCount: number): number[] => {
@@ -201,10 +219,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
     const used = state.currentRound?.usedWords || [];
     const skipped = state.currentRound?.skippedWords || [];
-    const selected = pickRandomWord(topic, used, skipped);
+    const usedClues = state.currentRound?.usedClues || [];
+    const selected = pickRandomWord(topic, used, skipped, usedClues);
     const imposterIndices = pickImposterIndices(state.settings.players.length, state.settings.imposterCount);
 
     const newUsedWords = [...used, selected.word];
+    const newUsedClues = [...usedClues, selected.clue];
 
     setState((prev) => ({
       ...prev,
@@ -214,25 +234,28 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         imposterIndices,
         usedWords: newUsedWords,
         skippedWords: prev.currentRound?.skippedWords || [],
+        usedClues: newUsedClues,
       },
     }));
-  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.settings.players.length, state.settings.imposterCount]);
+  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.settings.players.length, state.settings.imposterCount]);
 
   const skipCurrentWord = useCallback(() => {
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
     const used = state.currentRound?.usedWords || [];
     const skipped = state.currentRound?.skippedWords || [];
+    const usedClues = state.currentRound?.usedClues || [];
     const currentWord = state.currentRound?.secretWord;
 
     // Add current word to skipped list
     const newSkipped = currentWord ? [...skipped, currentWord] : skipped;
 
     // Pick a new word (excluding used + skipped)
-    const selected = pickRandomWord(topic, used, newSkipped);
+    const selected = pickRandomWord(topic, used, newSkipped, usedClues);
     // Keep the SAME imposter indices - only word changes
     const imposterIndices = state.currentRound?.imposterIndices || pickImposterIndices(state.settings.players.length, state.settings.imposterCount);
 
     const newUsedWords = [...used, selected.word];
+    const newUsedClues = [...usedClues, selected.clue];
 
     setState((prev) => ({
       ...prev,
@@ -242,15 +265,17 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         imposterIndices,
         usedWords: newUsedWords,
         skippedWords: newSkipped,
+        usedClues: newUsedClues,
       },
     }));
-  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.secretWord, state.currentRound?.imposterIndices, state.settings.players.length, state.settings.imposterCount]);
+  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.currentRound?.secretWord, state.currentRound?.imposterIndices, state.settings.players.length, state.settings.imposterCount]);
 
   const startRoundSetup = useCallback(() => {
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
     const used = state.currentRound?.usedWords || [];
     const skipped = state.currentRound?.skippedWords || [];
-    const selected = pickRandomWord(topic, used, skipped);
+    const usedClues = state.currentRound?.usedClues || [];
+    const selected = pickRandomWord(topic, used, skipped, usedClues);
     const imposterIndices = pickImposterIndices(state.settings.players.length, state.settings.imposterCount);
 
     setState((prev) => ({
@@ -267,9 +292,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         imposterIndices,
         usedWords: [...used, selected.word],
         skippedWords: skipped,
+        usedClues: [...usedClues, selected.clue],
       },
     }));
-  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.settings.players.length, state.settings.imposterCount]);
+  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.settings.players.length, state.settings.imposterCount]);
 
   const advanceRevealPlayer = useCallback(() => {
     setState((prev) => {
@@ -397,7 +423,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const topic = TOPICS.find((t) => t.id === prev.settings.topicId) || TOPICS[0];
       const used = prev.currentRound?.usedWords || [];
       const skipped = prev.currentRound?.skippedWords || [];
-      const selected = pickRandomWord(topic, used, skipped);
+      const usedClues = prev.currentRound?.usedClues || [];
+      const selected = pickRandomWord(topic, used, skipped, usedClues);
       const imposterIndices = pickImposterIndices(prev.settings.players.length, prev.settings.imposterCount);
 
       return {
@@ -414,6 +441,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           imposterIndices,
           usedWords: [...used, selected.word],
           skippedWords: skipped,
+          usedClues: [...usedClues, selected.clue],
         },
       };
     });
