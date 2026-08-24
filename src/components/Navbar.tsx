@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Volume2, VolumeX, HelpCircle, LogOut } from 'lucide-react';
+import { HelpCircle, LogOut, Trophy } from 'lucide-react';
 import { useGame } from '@/context/GameContext';
 import { HowToPlayModal } from './HowToPlayModal';
 import { ExitDialog } from './ExitDialog';
 
 export const Navbar: React.FC = () => {
-  const { state, soundEnabled, setSoundEnabled, exitToHome } = useGame();
+  const { state, setPhase, exitToHome } = useGame();
   const [showRules, setShowRules] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -50,6 +50,18 @@ export const Navbar: React.FC = () => {
 
         {/* Right: Quick Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Scoreboard shortcut mid-game */}
+          {state.phase !== 'home' && state.phase !== 'scoreboard' && (
+            <button
+              onClick={() => setPhase('scoreboard')}
+              className="w-9 h-9 rounded-xl glass-button flex items-center justify-center text-amber-400 hover:text-amber-300 transition-colors"
+              title="View Scoreboard"
+              aria-label="View Scoreboard"
+            >
+              <Trophy className="w-4 h-4" />
+            </button>
+          )}
+
           {/* Rules Button */}
           <button
             onClick={() => setShowRules(true)}
@@ -58,16 +70,6 @@ export const Navbar: React.FC = () => {
             aria-label="How to play"
           >
             <HelpCircle className="w-4 h-4" />
-          </button>
-
-          {/* Sound Toggle */}
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className="w-9 h-9 rounded-xl glass-button flex items-center justify-center text-slate-400 hover:text-slate-200 transition-colors"
-            title={soundEnabled ? 'Mute sound' : 'Unmute sound'}
-            aria-label={soundEnabled ? 'Mute sound' : 'Unmute sound'}
-          >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-violet-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
           </button>
 
           {/* Exit Game Button (Mid-game or in setup) */}

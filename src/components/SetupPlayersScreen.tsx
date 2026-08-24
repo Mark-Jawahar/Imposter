@@ -7,8 +7,7 @@ import { useGame } from '@/context/GameContext';
 import { Button } from '@/components/ui/Button';
 
 const QUICK_NAMES = [
-  'Arun', 'Priya', 'Karthik', 'Sanjay', 'Ananya', 'Rahul', 'Divya', 'Vikram', 
-  'Sneha', 'Manoj', 'Pooja', 'Deepak', 'Aishwarya', 'Vijay', 'Naveen'
+  'Jawahar', 'Preethi', 'Uthay', 'Jeyaram', 'Kevin', 'Raghu', 'Abhishek', 'Rohith', 'Robin'
 ];
 
 export const SetupPlayersScreen: React.FC = () => {

@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { Player, Topic, GameSettings, RoundData, VoteResult, GameState, GamePhase, RoundHistory } from '@/types/game';
 import { TOPICS, TopicData, WordCluePair } from '@/data/topics';
-import { sounds, triggerHaptic } from '@/lib/sound';
 
 interface GameContextType {
   state: GameState;
@@ -26,17 +25,15 @@ interface GameContextType {
   startNextRound: (keepTopic?: boolean) => void;
   resetGame: () => void;
   exitToHome: () => void;
-  soundEnabled: boolean;
-  setSoundEnabled: (enabled: boolean) => void;
 }
 
-const STORAGE_KEY = 'imposter_game_v2';
+const STORAGE_KEY = 'imposter_game_v3';
 
 const DEFAULT_PLAYERS: Player[] = [
-  { id: 'p1', name: 'Arun', score: 0 },
-  { id: 'p2', name: 'Priya', score: 0 },
-  { id: 'p3', name: 'Karthik', score: 0 },
-  { id: 'p4', name: 'Sanjay', score: 0 },
+  { id: 'p1', name: 'Jawahar', score: 0 },
+  { id: 'p2', name: 'Preethi', score: 0 },
+  { id: 'p3', name: 'Uthay', score: 0 },
+  { id: 'p4', name: 'Jeyaram', score: 0 },
 ];
 
 const INITIAL_SETTINGS: GameSettings = {
@@ -61,7 +58,6 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<GameState>(INITIAL_STATE);
-  const [soundEnabled, setSoundEnabledState] = useState<boolean>(true);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   // Load state from localStorage on mount
@@ -88,11 +84,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [state, isInitialized]);
 
-  const setSoundEnabled = (enabled: boolean) => {
-    setSoundEnabledState(enabled);
-    sounds.setEnabled(enabled);
-  };
-
   const selectedTopic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
 
   const setPhase = useCallback((phase: GamePhase) => {
@@ -112,9 +103,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const trimmed = name.trim();
     if (!trimmed) return false;
     if (state.settings.players.length >= 15) return false;
-
-    sounds.playTap();
-    triggerHaptic(10);
 
     setState((prev) => {
       const newPlayer: Player = {
@@ -139,9 +127,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [getMaxAllowedImposters, state.settings.players.length]);
 
   const removePlayer = useCallback((id: string) => {
-    sounds.playClick();
-    triggerHaptic(15);
-
     setState((prev) => {
       if (prev.settings.players.length <= 3) return prev;
       const updatedPlayers = prev.settings.players.filter((p) => p.id !== id);
@@ -173,8 +158,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const setImposterCount = useCallback((count: number) => {
-    sounds.playClick();
-    triggerHaptic(10);
     setState((prev) => {
       const maxImp = getMaxAllowedImposters(prev.settings.players.length);
       const validCount = Math.max(1, Math.min(count, maxImp));
@@ -189,8 +172,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [getMaxAllowedImposters]);
 
   const setTopicId = useCallback((topicId: string) => {
-    sounds.playClick();
-    triggerHaptic(10);
     setState((prev) => ({
       ...prev,
       settings: {
@@ -220,8 +201,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const generateNewWord = useCallback(() => {
-    sounds.playTap();
-    triggerHaptic(15);
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
     const used = state.currentRound?.usedWords || [];
     const selected = pickRandomWord(topic, used);
@@ -240,10 +219,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }));
   }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.settings.players.length, state.settings.imposterCount]);
 
-  // Start round immediately skips preview and goes straight to reveal
   const startRoundSetup = useCallback(() => {
-    sounds.playClick();
-    triggerHaptic(20);
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
     const used = state.currentRound?.usedWords || [];
     const selected = pickRandomWord(topic, used);
@@ -267,8 +243,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.settings.players.length, state.settings.imposterCount]);
 
   const advanceRevealPlayer = useCallback(() => {
-    sounds.playClick();
-    triggerHaptic(15);
     setState((prev) => {
       const nextIndex = prev.currentPlayerIndex + 1;
       if (nextIndex >= prev.settings.players.length) {
@@ -286,8 +260,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const advanceVotePlayer = useCallback(() => {
-    sounds.playClick();
-    triggerHaptic(15);
     setState((prev) => {
       const nextIndex = prev.currentPlayerIndex + 1;
       if (nextIndex >= prev.settings.players.length) {
@@ -305,8 +277,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const recordVote = useCallback((voterId: string, suspectId: string) => {
-    sounds.playVoteSelected();
-    triggerHaptic(20);
     setState((prev) => ({
       ...prev,
       votes: {
@@ -350,9 +320,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const updatedPlayers = prev.settings.players.map((p) => ({ ...p }));
 
       if (isAnyImposterCaught) {
-        // Players caught the imposter! Normal players get +2 pts
-        sounds.playSuccess();
-        triggerHaptic([50, 50, 50]);
         winner = 'players';
         updatedPlayers.forEach((p) => {
           if (!imposterPlayerIds.includes(p.id)) {
@@ -360,9 +327,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         });
       } else {
-        // Imposter survived! Imposters get +2 pts
-        sounds.playBuzzer();
-        triggerHaptic([50, 80, 50]);
         winner = 'imposters';
         updatedPlayers.forEach((p) => {
           if (imposterPlayerIds.includes(p.id)) {
@@ -400,8 +364,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const startNextRound = useCallback((keepTopic = true) => {
-    sounds.playClick();
-    triggerHaptic(20);
     setState((prev) => {
       const topic = TOPICS.find((t) => t.id === prev.settings.topicId) || TOPICS[0];
       const used = prev.currentRound?.usedWords || [];
@@ -427,7 +389,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [pickRandomWord, pickImposterIndices]);
 
   const resetGame = useCallback(() => {
-    sounds.playTap();
     setState({
       ...INITIAL_STATE,
       settings: {
@@ -438,7 +399,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [state.settings.players]);
 
   const exitToHome = useCallback(() => {
-    sounds.playTap();
     setState((prev) => ({
       ...prev,
       phase: 'home',
@@ -472,8 +432,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         startNextRound,
         resetGame,
         exitToHome,
-        soundEnabled,
-        setSoundEnabled,
       }}
     >
       {children}

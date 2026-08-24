@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, Check, Smartphone, Sparkles } from 'lucide-react';
 import { useGame } from '@/context/GameContext';
 import { Button } from '@/components/ui/Button';
-import { sounds } from '@/lib/sound';
 
 export const RevealScreen: React.FC = () => {
   const { state, advanceRevealPlayer, selectedTopic } = useGame();
@@ -23,11 +22,6 @@ export const RevealScreen: React.FC = () => {
 
   const handleReveal = () => {
     setIsRevealed(true);
-    if (isImposter) {
-      sounds.playImposterReveal();
-    } else {
-      sounds.playReveal();
-    }
   };
 
   const handleGotIt = () => {

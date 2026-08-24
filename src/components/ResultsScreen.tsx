@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Skull, CheckCircle, XCircle, ArrowRight } from 'lucide-react';
+import { Skull, CheckCircle, XCircle, ArrowRight, Trophy } from 'lucide-react';
 import { useGame } from '@/context/GameContext';
 import { Button } from '@/components/ui/Button';
 
 export const ResultsScreen: React.FC = () => {
-  const { state, calculateVoteResults } = useGame();
+  const { state, calculateVoteResults, startNextRound, setPhase } = useGame();
   const players = state.settings.players;
   const voteResults = state.voteResults;
   const caughtImposters = state.caughtImposters;
@@ -112,17 +112,25 @@ export const ResultsScreen: React.FC = () => {
       </div>
 
       {/* Bottom Action Area */}
-      <div className="pt-2">
+      <div className="space-y-2.5 pt-2">
+        {/* Primary CTA: Next Word */}
         <Button
           variant="primary"
           size="xl"
           fullWidth
-          onClick={() => {
-            // Transition directly to scoreboard
-            const { setPhase } = useGame();
-            setPhase('scoreboard');
-          }}
+          onClick={() => startNextRound(true)}
           icon={<ArrowRight className="w-5 h-5" />}
+        >
+          Next Word
+        </Button>
+
+        {/* Secondary Action: View Scoreboard */}
+        <Button
+          variant="secondary"
+          size="lg"
+          fullWidth
+          onClick={() => setPhase('scoreboard')}
+          icon={<Trophy className="w-4 h-4 text-amber-400" />}
         >
           View Scoreboard
         </Button>

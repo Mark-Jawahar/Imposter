@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion, HTMLMotionProps } from 'framer-motion';
-import { sounds, triggerHaptic } from '@/lib/sound';
 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'gold' | 'ghost' | 'glass';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -13,8 +12,6 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   size?: ButtonSize;
   fullWidth?: boolean;
   icon?: React.ReactNode;
-  soundType?: 'click' | 'tap' | 'vote';
-  haptic?: number;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,8 +20,6 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'md',
   fullWidth = false,
   icon,
-  soundType = 'click',
-  haptic = 12,
   className = '',
   onClick,
   disabled,
@@ -66,11 +61,6 @@ export const Button: React.FC<ButtonProps> = ({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
-    if (soundType === 'click') sounds.playClick();
-    else if (soundType === 'tap') sounds.playTap();
-    else if (soundType === 'vote') sounds.playVoteSelected();
-
-    triggerHaptic(haptic);
     if (onClick) {
       onClick(e);
     }

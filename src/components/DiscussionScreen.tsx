@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { MessageSquare, Vote, Play, Pause, RotateCcw, Clock } from 'lucide-react';
 import { useGame } from '@/context/GameContext';
 import { Button } from '@/components/ui/Button';
-import { sounds, triggerHaptic } from '@/lib/sound';
 
 export const DiscussionScreen: React.FC = () => {
   const { setPhase, state, selectedTopic } = useGame();
@@ -19,13 +18,7 @@ export const DiscussionScreen: React.FC = () => {
         setTimerSeconds((prev) => {
           if (prev <= 1) {
             setIsRunning(false);
-            sounds.playBuzzer();
-            triggerHaptic([100, 100, 200]);
             return 0;
-          }
-          if (prev <= 6) {
-            sounds.playCountdownTick();
-            triggerHaptic(10);
           }
           return prev - 1;
         });
@@ -35,12 +28,10 @@ export const DiscussionScreen: React.FC = () => {
   }, [isRunning, timerSeconds]);
 
   const toggleTimer = () => {
-    sounds.playTap();
     setIsRunning(!isRunning);
   };
 
   const resetTimer = (secs: number) => {
-    sounds.playClick();
     setIsRunning(false);
     setTimerSeconds(secs);
   };
