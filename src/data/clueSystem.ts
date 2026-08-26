@@ -10,17 +10,17 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-01',
     movieTitle: 'Ghilli',
-    indirectClues: ['RIVALRY', 'RESCUE', 'SPORT', 'BROTHER', 'CHASE'],
+    indirectClues: ['KABADDI', 'RESCUE', 'RIVAL', 'BROTHER', 'CHASE'],
   },
   {
     movieId: 'tm-02',
     movieTitle: 'Vikram',
-    indirectClues: ['CARTEL', 'AGENT', 'MISSION', 'DRUGS', 'SHADOW'],
+    indirectClues: ['CARTEL', 'MASK', 'AGENT', 'MISSION', 'DRUGS'],
   },
   {
     movieId: 'tm-03',
     movieTitle: 'Mankatha',
-    indirectClues: ['HEIST', 'BETRAYAL', 'MONEY', 'PLAN', 'GAMBLE'],
+    indirectClues: ['HEIST', 'MONEY', 'BETRAYAL', 'PLAN', 'GAMBLE'],
   },
   {
     movieId: 'tm-04',
@@ -35,7 +35,7 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-06',
     movieTitle: 'Master',
-    indirectClues: ['TEACHER', 'YOUTH', 'REFORM', 'SCHOOL', 'ADDICTION'],
+    indirectClues: ['TEACHER', 'YOUTH', 'REFORM', 'SCHOOL', 'DRINK'],
   },
   {
     movieId: 'tm-07',
@@ -60,7 +60,7 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-11',
     movieTitle: 'Thuppakki',
-    indirectClues: ['ARMY', 'HOLIDAY', 'SLEEPER', 'MISSION', 'TERROR'],
+    indirectClues: ['ARMY', 'HOLIDAY', 'SPY', 'MISSION', 'TERROR'],
   },
   {
     movieId: 'tm-12',
@@ -75,27 +75,27 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-14',
     movieTitle: 'Jai Bhim',
-    indirectClues: ['LAWYER', 'TRIBE', 'CUSTODY', 'TRUTH', 'JUSTICE'],
+    indirectClues: ['LAWYER', 'TRIBE', 'JAIL', 'TRUTH', 'JUSTICE'],
   },
   {
     movieId: 'tm-15',
     movieTitle: 'Vada Chennai',
-    indirectClues: ['CARROM', 'PRISON', 'GANG', 'LOYALTY', 'GENERATION'],
+    indirectClues: ['CARROM', 'PRISON', 'GANG', 'LOYALTY', 'REVENGE'],
   },
   {
     movieId: 'tm-16',
     movieTitle: 'Petta',
-    indirectClues: ['HOSTEL', 'WARDEN', 'FLASHBACK', 'VENDETTA', 'STUDENT'],
+    indirectClues: ['HOSTEL', 'WARDEN', 'FLASHBACK', 'REVENGE', 'STUDENT'],
   },
   {
     movieId: 'tm-17',
     movieTitle: 'Billa',
-    indirectClues: ['DOUBLE', 'INTERPOL', 'LOOKALIKE', 'DIAMOND', 'REPLACEMENT'],
+    indirectClues: ['DOUBLE', 'POLICE', 'LOOKALIKE', 'DIAMOND', 'REPLACEMENT'],
   },
   {
     movieId: 'tm-18',
     movieTitle: 'Doctor',
-    indirectClues: ['TRAFFICKING', 'CHILDREN', 'MILITARY', 'PLAN', 'SILENCE'],
+    indirectClues: ['KIDNAP', 'CHILDREN', 'MILITARY', 'PLAN', 'SILENCE'],
   },
   {
     movieId: 'tm-19',
@@ -105,12 +105,12 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-20',
     movieTitle: 'Super Deluxe',
-    indirectClues: ['FATE', 'TRANSGENDER', 'PORN', 'ALIEN', 'COINCIDENCE'],
+    indirectClues: ['FATE', 'GENDER', 'ALIEN', 'CHANCE', 'SECRETS'],
   },
   {
     movieId: 'tm-21',
     movieTitle: 'Pariyerum Perumal',
-    indirectClues: ['CASTE', 'LAW', 'HORSE', 'DISCRIMINATION', 'JUSTICE'],
+    indirectClues: ['CASTE', 'LAW', 'HORSE', 'UNFAIR', 'JUSTICE'],
   },
   {
     movieId: 'tm-22',
@@ -135,7 +135,7 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-26',
     movieTitle: 'Bigil',
-    indirectClues: ['FOOTBALL', 'COACH', 'REDEMPTION', 'VILLAGE', 'WOMEN'],
+    indirectClues: ['FOOTBALL', 'COACH', 'CHANCE', 'VILLAGE', 'WOMEN'],
   },
   {
     movieId: 'tm-27',
@@ -150,7 +150,7 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-29',
     movieTitle: 'Ghajini',
-    indirectClues: ['AMNESIA', 'TATTOO', 'REVENGE', 'SHORTTERM', 'CALENDAR'],
+    indirectClues: ['MEMORY', 'TATTOO', 'REVENGE', 'NOTE', 'CALENDAR'],
   },
   {
     movieId: 'tm-30',
@@ -160,22 +160,22 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-31',
     movieTitle: 'Karnan',
-    indirectClues: ['BUS', 'OPPRESSION', 'VILLAGE', 'SWORD', 'DIGNITY'],
+    indirectClues: ['BUS', 'CONTROL', 'VILLAGE', 'SWORD', 'PRIDE'],
   },
   {
     movieId: 'tm-32',
     movieTitle: 'I',
-    indirectClues: ['BODYBUILDER', 'TRANSFORMATION', 'MODEL', 'REVENGE', 'VIRUS'],
+    indirectClues: ['BODYBUILDER', 'CHANGE', 'MODEL', 'REVENGE', 'VIRUS'],
   },
   {
     movieId: 'tm-33',
     movieTitle: 'Aadukalam',
-    indirectClues: ['ROOSTER', 'BETTING', 'RIVALRY', 'TRAINING', 'POLITICS'],
+    indirectClues: ['ROOSTER', 'BET', 'RIVALRY', 'TRAINING', 'POLITICS'],
   },
   {
     movieId: 'tm-34',
     movieTitle: 'Arundhati',
-    indirectClues: ['REINCARNATION', 'ANCESTRAL', 'JEWELRY', 'SORCERY', 'BLOODLINE'],
+    indirectClues: ['REBIRTH', 'ANCESTRAL', 'JEWELRY', 'SORCERY', 'BLOODLINE'],
   },
   {
     movieId: 'tm-35',
@@ -205,17 +205,17 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-40',
     movieTitle: 'Por Thozhil',
-    indirectClues: ['SERIAL', 'MENTOR', 'PSYCHOLOGY', 'PATTERN', 'TRAINEE'],
+    indirectClues: ['SERIAL', 'MENTOR', 'MIND', 'PATTERN', 'TRAINEE'],
   },
   {
     movieId: 'tm-41',
     movieTitle: 'Chithha',
-    indirectClues: ['UNCLE', 'NIECE', 'ABDUCTION', 'PROTECTOR', 'TRAUMA'],
+    indirectClues: ['UNCLE', 'NIECE', 'ABDUCTION', 'PROTECTOR', 'PAIN'],
   },
   {
     movieId: 'tm-42',
     movieTitle: 'Amaran',
-    indirectClues: ['SOLDIER', 'KASHMIR', 'BIOPIC', 'LETTER', 'SACRIFICE'],
+    indirectClues: ['SOLDIER', 'KASHMIR', 'TRUE', 'LETTER', 'GIVE'],
   },
   {
     movieId: 'tm-43',
@@ -235,7 +235,7 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
   {
     movieId: 'tm-46',
     movieTitle: 'Vettaiyan',
-    indirectClues: ['ENCOUNTER', 'JUSTICE', 'HUMANRIGHTS', 'FAITH', 'SYSTEM'],
+    indirectClues: ['ENCOUNTER', 'JUSTICE', 'RIGHTS', 'FAITH', 'SYSTEM'],
   },
   {
     movieId: 'tm-47',
