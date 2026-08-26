@@ -27,6 +27,8 @@ interface GameContextType {
   startNextRound: (keepTopic?: boolean) => void;
   resetGame: () => void;
   exitToHome: () => void;
+  startWhoStarts: () => void;
+  advanceWhoStarts: () => void;
 }
 
 const STORAGE_KEY = 'imposter_game_v4';
@@ -42,11 +44,15 @@ const INITIAL_STATE: GameState = {
   settings: INITIAL_SETTINGS,
   currentRound: null,
   currentPlayerIndex: 0,
+  revealOrder: [],
   votes: {},
   voteResults: [],
   caughtImposters: [],
   roundWinner: null,
   gameHistory: [],
+  imposterHistory: {},
+  currentCycleImposters: [],
+  whoStartsPlayerId: null,
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -66,6 +72,11 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (parsed.currentRound && !parsed.currentRound.usedClues) {
           parsed.currentRound.usedClues = [];
         }
+        // Migration: ensure new fields exist
+        if (parsed.revealOrder === undefined) parsed.revealOrder = [];
+        if (parsed.imposterHistory === undefined) parsed.imposterHistory = {};
+        if (parsed.currentCycleImposters === undefined) parsed.currentCycleImposters = [];
+        if (parsed.whoStartsPlayerId === undefined) parsed.whoStartsPlayerId = null;
         return parsed;
       }
     } catch {
@@ -203,14 +214,36 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return selected;
   }, []);
 
-  const pickImposterIndices = useCallback((playerCount: number, imposterCount: number): number[] => {
-    const indices: number[] = [];
+  const pickImposterIndices = useCallback((playerCount: number, imposterCount: number, players: Player[], imposterHistory: Record<string, number>, currentCycleImposters: string[]): number[] => {
     const validCount = Math.min(imposterCount, playerCount - 1);
-    while (indices.length < validCount) {
-      const r = Math.floor(Math.random() * playerCount);
-      if (!indices.includes(r)) {
-        indices.push(r);
-      }
+    
+    // Get players who haven't been imposter in current cycle
+    const eligiblePlayers = players.filter((p) => !currentCycleImposters.includes(p.id));
+    
+    // If everyone has been imposter in this cycle, reset the cycle
+    const availablePlayers = eligiblePlayers.length > 0 ? eligiblePlayers : players;
+    
+    // Sort by imposter history (ascending) to prioritize those who've been imposter less
+    const sortedPlayers = [...availablePlayers].sort((a, b) => {
+      const historyA = imposterHistory[a.id] || 0;
+      const historyB = imposterHistory[b.id] || 0;
+      return historyA - historyB;
+    });
+    
+    // Take the first validCount players as imposters
+    const selectedPlayers = sortedPlayers.slice(0, validCount);
+    const selectedIndices = selectedPlayers.map(p => players.findIndex(player => player.id === p.id));
+    
+    return selectedIndices;
+  }, []);
+
+  // Generate a shuffled reveal order for the current round
+  const generateRevealOrder = useCallback((playerCount: number): number[] => {
+    const indices = Array.from({ length: playerCount }, (_, i) => i);
+    // Fisher-Yates shuffle
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
     }
     return indices;
   }, []);
@@ -221,7 +254,14 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const skipped = state.currentRound?.skippedWords || [];
     const usedClues = state.currentRound?.usedClues || [];
     const selected = pickRandomWord(topic, used, skipped, usedClues);
-    const imposterIndices = pickImposterIndices(state.settings.players.length, state.settings.imposterCount);
+    const imposterIndices = pickImposterIndices(
+      state.settings.players.length, 
+      state.settings.imposterCount,
+      state.settings.players,
+      state.imposterHistory,
+      state.currentCycleImposters
+    );
+    const revealOrder = generateRevealOrder(state.settings.players.length);
 
     const newUsedWords = [...used, selected.word];
     const newUsedClues = [...usedClues, selected.clue];
@@ -236,8 +276,9 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         skippedWords: prev.currentRound?.skippedWords || [],
         usedClues: newUsedClues,
       },
+      revealOrder,
     }));
-  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.settings.players.length, state.settings.imposterCount]);
+  }, [pickRandomWord, pickImposterIndices, generateRevealOrder, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.settings.players.length, state.settings.imposterCount, state.settings.players, state.imposterHistory, state.currentCycleImposters]);
 
   const skipCurrentWord = useCallback(() => {
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
@@ -252,13 +293,17 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Pick a new word (excluding used + skipped)
     const selected = pickRandomWord(topic, used, newSkipped, usedClues);
     // Keep the SAME imposter indices - only word changes
-    const imposterIndices = state.currentRound?.imposterIndices || pickImposterIndices(state.settings.players.length, state.settings.imposterCount);
+    const imposterIndices = state.currentRound?.imposterIndices || pickImposterIndices(state.settings.players.length, state.settings.imposterCount, state.settings.players, state.imposterHistory, state.currentCycleImposters);
+    // Generate NEW reveal order for the new word
+    const revealOrder = generateRevealOrder(state.settings.players.length);
 
     const newUsedWords = [...used, selected.word];
     const newUsedClues = [...usedClues, selected.clue];
 
     setState((prev) => ({
       ...prev,
+      phase: 'reveal',
+      currentPlayerIndex: 0,
       currentRound: {
         secretWord: selected.word,
         imposterClue: selected.clue,
@@ -267,8 +312,9 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         skippedWords: newSkipped,
         usedClues: newUsedClues,
       },
+      revealOrder,
     }));
-  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.currentRound?.secretWord, state.currentRound?.imposterIndices, state.settings.players.length, state.settings.imposterCount]);
+  }, [pickRandomWord, pickImposterIndices, generateRevealOrder, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.currentRound?.secretWord, state.currentRound?.imposterIndices, state.settings.players.length, state.settings.imposterCount, state.settings.players, state.imposterHistory, state.currentCycleImposters]);
 
   const startRoundSetup = useCallback(() => {
     const topic = TOPICS.find((t) => t.id === state.settings.topicId) || TOPICS[0];
@@ -276,7 +322,25 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const skipped = state.currentRound?.skippedWords || [];
     const usedClues = state.currentRound?.usedClues || [];
     const selected = pickRandomWord(topic, used, skipped, usedClues);
-    const imposterIndices = pickImposterIndices(state.settings.players.length, state.settings.imposterCount);
+    const imposterIndices = pickImposterIndices(
+      state.settings.players.length, 
+      state.settings.imposterCount,
+      state.settings.players,
+      state.imposterHistory,
+      state.currentCycleImposters
+    );
+    const revealOrder = generateRevealOrder(state.settings.players.length);
+
+    // Update imposter history for the new imposters
+    const newImposterHistory = { ...state.imposterHistory };
+    const newCurrentCycleImposters = [...state.currentCycleImposters];
+    imposterIndices.forEach((idx) => {
+      const playerId = state.settings.players[idx].id;
+      newImposterHistory[playerId] = (newImposterHistory[playerId] || 0) + 1;
+      if (!newCurrentCycleImposters.includes(playerId)) {
+        newCurrentCycleImposters.push(playerId);
+      }
+    });
 
     setState((prev) => ({
       ...prev,
@@ -286,6 +350,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       voteResults: [],
       caughtImposters: [],
       roundWinner: null,
+      revealOrder,
+      imposterHistory: newImposterHistory,
+      currentCycleImposters: newCurrentCycleImposters,
+      whoStartsPlayerId: null,
       currentRound: {
         secretWord: selected.word,
         imposterClue: selected.clue,
@@ -295,15 +363,15 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         usedClues: [...usedClues, selected.clue],
       },
     }));
-  }, [pickRandomWord, pickImposterIndices, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.settings.players.length, state.settings.imposterCount]);
+  }, [pickRandomWord, pickImposterIndices, generateRevealOrder, state.settings.topicId, state.currentRound?.usedWords, state.currentRound?.skippedWords, state.currentRound?.usedClues, state.settings.players.length, state.settings.imposterCount, state.settings.players, state.imposterHistory, state.currentCycleImposters]);
 
   const advanceRevealPlayer = useCallback(() => {
     setState((prev) => {
       const nextIndex = prev.currentPlayerIndex + 1;
-      if (nextIndex >= prev.settings.players.length) {
+      if (nextIndex >= prev.revealOrder.length) {
         return {
           ...prev,
-          phase: 'discussion',
+          phase: 'who-starts',
           currentPlayerIndex: 0,
         };
       }
@@ -425,7 +493,25 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const skipped = prev.currentRound?.skippedWords || [];
       const usedClues = prev.currentRound?.usedClues || [];
       const selected = pickRandomWord(topic, used, skipped, usedClues);
-      const imposterIndices = pickImposterIndices(prev.settings.players.length, prev.settings.imposterCount);
+      const imposterIndices = pickImposterIndices(
+        prev.settings.players.length,
+        prev.settings.imposterCount,
+        prev.settings.players,
+        prev.imposterHistory,
+        prev.currentCycleImposters
+      );
+      const revealOrder = generateRevealOrder(prev.settings.players.length);
+
+      // Update imposter history for the new imposters
+      const newImposterHistory = { ...prev.imposterHistory };
+      const newCurrentCycleImposters = [...prev.currentCycleImposters];
+      imposterIndices.forEach((idx) => {
+        const playerId = prev.settings.players[idx].id;
+        newImposterHistory[playerId] = (newImposterHistory[playerId] || 0) + 1;
+        if (!newCurrentCycleImposters.includes(playerId)) {
+          newCurrentCycleImposters.push(playerId);
+        }
+      });
 
       return {
         ...prev,
@@ -435,6 +521,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         voteResults: [],
         caughtImposters: [],
         roundWinner: null,
+        revealOrder,
+        imposterHistory: newImposterHistory,
+        currentCycleImposters: newCurrentCycleImposters,
+        whoStartsPlayerId: null,
         currentRound: {
           secretWord: selected.word,
           imposterClue: selected.clue,
@@ -445,7 +535,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
       };
     });
-  }, [pickRandomWord, pickImposterIndices]);
+  }, [pickRandomWord, pickImposterIndices, generateRevealOrder]);
 
   const resetGame = useCallback(() => {
     setState({
@@ -454,18 +544,44 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         ...INITIAL_SETTINGS,
         players: state.settings.players.map((p) => ({ ...p, score: 0 })),
       },
+      imposterHistory: {},
+      currentCycleImposters: [],
     });
   }, [state.settings.players]);
+
+  const startWhoStarts = useCallback(() => {
+    // Called when entering who-starts phase - randomly select a starter
+    setState((prev) => {
+      const activePlayers = prev.settings.players;
+      const randomIndex = Math.floor(Math.random() * activePlayers.length);
+      const starterId = activePlayers[randomIndex].id;
+      return {
+        ...prev,
+        whoStartsPlayerId: starterId,
+      };
+    });
+  }, []);
+
+  const advanceWhoStarts = useCallback(() => {
+    // Called when user taps to proceed from who-starts to discussion
+    setState((prev) => ({
+      ...prev,
+      phase: 'discussion',
+      currentPlayerIndex: 0,
+    }));
+  }, []);
 
   const exitToHome = useCallback(() => {
     setState((prev) => ({
       ...prev,
       phase: 'home',
       currentPlayerIndex: 0,
+      revealOrder: [],
       votes: {},
       voteResults: [],
       caughtImposters: [],
       roundWinner: null,
+      whoStartsPlayerId: null,
     }));
   }, []);
 
@@ -492,6 +608,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         startNextRound,
         resetGame,
         exitToHome,
+        startWhoStarts,
+        advanceWhoStarts,
       }}
     >
       {children}

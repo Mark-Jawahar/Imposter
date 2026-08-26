@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Eye, EyeOff, Check, Smartphone, RotateCw, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Check, Smartphone, RotateCw, AlertTriangle } from 'lucide-react';
 import { useGame } from '@/context/GameContext';
 import { Button } from '@/components/ui/Button';
 
@@ -11,11 +11,13 @@ export const RevealScreen: React.FC = () => {
   const [isRevealed, setIsRevealed] = useState(false);
 
   const players = state.settings.players;
-  const currentIndex = state.currentPlayerIndex;
-  const currentPlayer = players[currentIndex];
+  const revealOrder = state.revealOrder.length > 0 ? state.revealOrder : players.map((_, i) => i);
+  const currentRevealIndex = state.currentPlayerIndex;
+  const actualPlayerIndex = revealOrder[currentRevealIndex];
+  const currentPlayer = players[actualPlayerIndex];
 
   const imposterIndices = state.currentRound?.imposterIndices || [];
-  const isImposter = imposterIndices.includes(currentIndex);
+  const isImposter = imposterIndices.includes(actualPlayerIndex);
 
   const secretWord = state.currentRound?.secretWord || '';
   const imposterClue = state.currentRound?.imposterClue || '';
@@ -49,7 +51,7 @@ export const RevealScreen: React.FC = () => {
           </div>
 
           <span className="text-xs font-bold uppercase tracking-widest text-slate-400 font-mono">
-            Player {currentIndex + 1} of {players.length}
+            Player {currentRevealIndex + 1} of {revealOrder.length}
           </span>
         </div>
 
@@ -111,9 +113,9 @@ export const RevealScreen: React.FC = () => {
               className="w-full"
             >
               <div
-                className={`relative rounded-3xl p-7 sm:p-9 shadow-xl min-h-[260px] flex flex-col items-center justify-center border transition-all ${
+                className={`relative rounded-3xl p-7 sm:p-9 shadow-xl min-h-[280px] flex flex-col items-center justify-center border transition-all ${
                   isImposter
-                    ? 'bg-gradient-to-b from-[#1a1018] via-[#121018] to-[#0c0d14] border-rose-500/25 glow-crimson'
+                    ? 'bg-gradient-to-b from-[#1a1018] via-[#121018] to-[#0c0d14] border-rose-500/40 glow-crimson ring-1 ring-rose-500/20'
                     : 'bg-gradient-to-b from-[#101428] via-[#0e1020] to-[#0c0d14] border-violet-500/25 glow-purple'
                 }`}
               >
@@ -123,22 +125,73 @@ export const RevealScreen: React.FC = () => {
                   <span>{selectedTopic?.name}</span>
                 </div>
 
-                {/* Subtitle / Header */}
-                <div className="text-xs font-bold uppercase tracking-widest mb-1 text-slate-400 font-ui">
-                  {isImposter ? 'YOUR CLUE' : 'YOUR WORD'}
-                </div>
+                {isImposter ? (
+                  /* IMPOSTER STATE - Extremely Clear */
+                  <>
+                    {/* Imposter Alert Banner */}
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.2 }}
+                      className="w-full mb-4 px-4 py-3 rounded-2xl bg-rose-950/40 border border-rose-500/50 flex items-center justify-center gap-2"
+                    >
+                      <div className="w-7 h-7 rounded-full bg-rose-500/20 flex items-center justify-center">
+                        <AlertTriangle className="w-4 h-4 text-rose-400" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-rose-300 font-ui">
+                          You are the Imposter
+                        </div>
+                        <div className="text-xs text-rose-400/80 font-ui">
+                          You don&apos;t know the secret movie
+                        </div>
+                      </div>
+                    </motion.div>
 
-                {/* Secret Word or Imposter Clue */}
-                <div className="text-2xl sm:text-3xl font-display font-bold font-mono tracking-wider break-words my-3 text-white">
-                  {isImposter ? imposterClue : secretWord}
-                </div>
+                    {/* Subtitle / Header */}
+                    <div className="text-xs font-bold uppercase tracking-widest mb-2 text-rose-400 font-ui">
+                      YOUR CLUE
+                    </div>
 
-                {/* Subtle description & Role hint */}
-                <p className="text-xs text-slate-400 max-w-[240px] leading-relaxed font-ui">
-                  {isImposter
-                    ? 'You do not have the exact word. Give a subtle clue that matches this theme and blend in.'
-                    : 'Everyone else has this exact word. Give a smart clue so others know you know it.'}
-                </p>
+                    {/* Imposter Clue */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2, type: 'spring', damping: 15, stiffness: 200 }}
+                      className="text-3xl sm:text-4xl font-display font-bold font-mono tracking-wider break-words my-4 text-rose-300"
+                    >
+                      {imposterClue}
+                    </motion.div>
+
+                    {/* Subtle description */}
+                    <p className="text-xs text-slate-400 max-w-[240px] leading-relaxed font-ui text-center">
+                      Give a subtle clue related to this word. Blend in with the others!
+                    </p>
+                  </>
+                ) : (
+                  /* NORMAL PLAYER STATE */
+                  <>
+                    {/* Subtitle / Header */}
+                    <div className="text-xs font-bold uppercase tracking-widest mb-2 text-slate-400 font-ui">
+                      YOUR WORD
+                    </div>
+
+                    {/* Secret Word */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.1, type: 'spring', damping: 15, stiffness: 200 }}
+                      className="text-3xl sm:text-4xl font-display font-bold font-mono tracking-wider break-words my-4 text-white"
+                    >
+                      {secretWord}
+                    </motion.div>
+
+                    {/* Subtle description */}
+                    <p className="text-xs text-slate-400 max-w-[240px] leading-relaxed font-ui text-center">
+                      Everyone else has this exact word. Give a smart clue so others know you know it.
+                    </p>
+                  </>
+                )}
               </div>
             </motion.div>
           )}

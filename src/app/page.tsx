@@ -9,6 +9,7 @@ import { SetupImpostersScreen } from '@/components/SetupImpostersScreen';
 import { SetupTopicScreen } from '@/components/SetupTopicScreen';
 import { WordPreviewScreen } from '@/components/WordPreviewScreen';
 import { RevealScreen } from '@/components/RevealScreen';
+import { WhoStartsScreen } from '@/components/WhoStartsScreen';
 import { DiscussionScreen } from '@/components/DiscussionScreen';
 import { VotingScreen } from '@/components/VotingScreen';
 import { ResultsScreen } from '@/components/ResultsScreen';
@@ -31,6 +32,8 @@ export default function Page() {
         return <WordPreviewScreen />;
       case 'reveal':
         return <RevealScreen />;
+      case 'who-starts':
+        return <WhoStartsScreen />;
       case 'discussion':
         return <DiscussionScreen />;
       case 'voting':

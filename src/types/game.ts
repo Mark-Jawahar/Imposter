@@ -46,15 +46,19 @@ export interface VoteResult {
 }
 
 export interface GameState {
-  phase: 'home' | 'setup-players' | 'setup-imposters' | 'setup-topic' | 'word-preview' | 'reveal' | 'discussion' | 'voting' | 'results' | 'imposter-guess' | 'scoreboard';
+  phase: 'home' | 'setup-players' | 'setup-imposters' | 'setup-topic' | 'word-preview' | 'reveal' | 'who-starts' | 'discussion' | 'voting' | 'results' | 'imposter-guess' | 'scoreboard';
   settings: GameSettings;
   currentRound: RoundData | null;
   currentPlayerIndex: number;
+  revealOrder: number[];
   votes: Record<string, string>;
   voteResults: VoteResult[];
   caughtImposters: string[];
   roundWinner: 'players' | 'imposters' | null;
   gameHistory: RoundHistory[];
+  imposterHistory: Record<string, number>;
+  currentCycleImposters: string[];
+  whoStartsPlayerId: string | null;
 }
 
 export interface RoundHistory {
