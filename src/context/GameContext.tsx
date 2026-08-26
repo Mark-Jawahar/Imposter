@@ -29,6 +29,7 @@ interface GameContextType {
   exitToHome: () => void;
   startWhoStarts: () => void;
   advanceWhoStarts: () => void;
+  skipVoting: () => void;
 }
 
 const STORAGE_KEY = 'imposter_game_v4';
@@ -486,6 +487,58 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   }, []);
 
+  const skipVoting = useCallback(() => {
+    setState((prev) => {
+      const imposterIndices = prev.currentRound?.imposterIndices || [];
+      const imposterPlayerIds = imposterIndices.map((idx) => prev.settings.players[idx].id);
+      
+      // Create vote results with all zeros (no votes cast)
+      const results: VoteResult[] = prev.settings.players
+        .map((p) => ({
+          playerId: p.id,
+          votes: 0,
+        }))
+        .sort((a, b) => b.votes - a.votes);
+
+      // When voting is skipped, imposters survive (no one caught)
+      const winner: 'players' | 'imposters' = 'imposters';
+      const updatedPlayers = prev.settings.players.map((p) => ({ ...p }));
+      updatedPlayers.forEach((p) => {
+        if (imposterPlayerIds.includes(p.id)) {
+          p.score += 2;
+        }
+      });
+
+      const scoresRecord: Record<string, number> = {};
+      updatedPlayers.forEach((p) => {
+        scoresRecord[p.name] = p.score;
+      });
+
+      const newHistory: RoundHistory = {
+        round: prev.gameHistory.length + 1,
+        secretWord: prev.currentRound?.secretWord || '',
+        imposters: imposterPlayerIds.map((id) => prev.settings.players.find((p) => p.id === id)?.name || ''),
+        caughtImposters: [],
+        winner,
+        scores: scoresRecord,
+      };
+
+      return {
+        ...prev,
+        phase: 'results',
+        currentPlayerIndex: 0,
+        voteResults: results,
+        caughtImposters: [],
+        roundWinner: winner,
+        settings: {
+          ...prev.settings,
+          players: updatedPlayers,
+        },
+        gameHistory: [newHistory, ...prev.gameHistory],
+      };
+    });
+  }, []);
+
   const startNextRound = useCallback((keepTopic = true) => {
     setState((prev) => {
       const topic = TOPICS.find((t) => t.id === prev.settings.topicId) || TOPICS[0];
@@ -610,6 +663,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         exitToHome,
         startWhoStarts,
         advanceWhoStarts,
+        skipVoting,
       }}
     >
       {children}

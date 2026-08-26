@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Vote, Smartphone, Check, ArrowRight } from 'lucide-react';
+import { Vote, Smartphone, Check, ArrowRight, SkipForward } from 'lucide-react';
 import { useGame } from '@/context/GameContext';
 import { Button } from '@/components/ui/Button';
 
 export const VotingScreen: React.FC = () => {
-  const { state, recordVote, advanceVotePlayer, calculateVoteResults } = useGame();
+  const { state, recordVote, advanceVotePlayer, calculateVoteResults, skipVoting } = useGame();
   const players = state.settings.players;
   const currentIndex = state.currentPlayerIndex;
   const voter = players[currentIndex];
@@ -25,6 +25,10 @@ export const VotingScreen: React.FC = () => {
       calculateVoteResults();
     }
     advanceVotePlayer();
+  };
+
+  const handleSkipVoting = () => {
+    skipVoting();
   };
 
   if (!voter) return null;
@@ -95,7 +99,7 @@ export const VotingScreen: React.FC = () => {
       </div>
 
       {/* Bottom Actions */}
-      <div className="pt-4">
+      <div className="pt-4 space-y-2">
         <Button
           variant="primary"
           size="xl"
@@ -106,6 +110,17 @@ export const VotingScreen: React.FC = () => {
           iconPosition="right"
         >
           Confirm Vote
+        </Button>
+
+        <Button
+          variant="tertiary"
+          size="sm"
+          fullWidth
+          onClick={handleSkipVoting}
+          icon={<SkipForward className="w-4 h-4" />}
+          iconPosition="left"
+        >
+          Skip Voting
         </Button>
       </div>
     </div>
