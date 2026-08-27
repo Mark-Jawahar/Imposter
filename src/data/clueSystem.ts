@@ -367,10 +367,10 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
     movieTitle: 'Kovil',
     indirectClues: ['TEMPLE', 'RELIGION', 'CHRISTIAN', 'FATHER', 'LOVE'],
   },
-{
-    movieId: 'tm-50',
-    movieTitle: 'Papanasam',
-    indirectClues: ['COVERUP', 'CABLE', 'POLICE', 'FAMILY', 'ALIBI'],
+  {
+    movieId: 'tm-73',
+    movieTitle: 'Arul',
+    indirectClues: ['TRUCK', 'BROTHER', 'WEALTH', 'EXILE', 'REUNION'],
   },
   {
     movieId: 'tm-74',
