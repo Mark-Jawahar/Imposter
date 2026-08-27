@@ -257,6 +257,121 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
     movieTitle: 'Papanasam',
     indirectClues: ['COVERUP', 'CABLE', 'POLICE', 'FAMILY', 'ALIBI'],
   },
+  {
+    movieId: 'tm-51',
+    movieTitle: 'Hey Ram',
+    indirectClues: ['PARTITION', 'GANDHI', 'REVENGE', 'ATONEMENT', 'HISTORY'],
+  },
+  {
+    movieId: 'tm-52',
+    movieTitle: 'Alaipayuthey',
+    indirectClues: ['MARRIAGE', 'ELOPEMENT', 'CHENNAI', 'TRAIN', 'ARGUMENT'],
+  },
+  {
+    movieId: 'tm-53',
+    movieTitle: 'Kushi',
+    indirectClues: ['COLLEGE', 'EGO', 'FRIENDSHIP', 'MISUNDERSTANDING', 'REUNION'],
+  },
+  {
+    movieId: 'tm-54',
+    movieTitle: 'Thenali',
+    indirectClues: ['PHOBIA', 'PSYCHIATRIST', 'SRI LANKA', 'VACATION', 'LAUGHTER'],
+  },
+  {
+    movieId: 'tm-55',
+    movieTitle: 'Kannukkul Nilavu',
+    indirectClues: ['AMNESIA', 'PSYCHOLOGIST', 'PONDICHERRY', 'TRUTH', 'SISTER'],
+  },
+  {
+    movieId: 'tm-56',
+    movieTitle: 'Vaanathaippola',
+    indirectClues: ['BROTHERS', 'SACRIFICE', 'COOK', 'GRANDMOTHER', 'WEDDING'],
+  },
+  {
+    movieId: 'tm-57',
+    movieTitle: 'Appu',
+    indirectClues: ['TAXI', 'BROTHEL', 'MUMBAI', 'RESCUE', 'SISTER'],
+  },
+  {
+    movieId: 'tm-58',
+    movieTitle: 'Parthen Rasithen',
+    indirectClues: ['TENANT', 'MEDICINE', 'STEPBROTHER', 'DECEPTION', 'SUICIDE'],
+  },
+  {
+    movieId: 'tm-59',
+    movieTitle: 'Dheena',
+    indirectClues: ['BROTHER', 'GANGSTER', 'HAND', 'LOYALTY', 'SISTER'],
+  },
+  {
+    movieId: 'tm-60',
+    movieTitle: 'Gemini',
+    indirectClues: ['REFORM', 'LOVE', 'RIVAL', 'PAAN', 'COURT'],
+  },
+  {
+    movieId: 'tm-61',
+    movieTitle: 'Ramanaa',
+    indirectClues: ['PROFESSOR', 'CORRUPTION', 'VIGILANTE', 'STUDENTS', 'EXECUTION'],
+  },
+  {
+    movieId: 'tm-62',
+    movieTitle: 'Kaakha Kaakha',
+    indirectClues: ['POLICE', 'GANGSTER', 'WIFE', 'REVENGE', 'BROTHER'],
+  },
+  {
+    movieId: 'tm-63',
+    movieTitle: 'Anbe Sivam',
+    indirectClues: ['COMMUNIST', 'JOURNEY', 'BUS', 'HUMANITY', 'FRIENDSHIP'],
+  },
+  {
+    movieId: 'tm-64',
+    movieTitle: 'Saamy',
+    indirectClues: ['BRIBE', 'PERUMAL', 'TEMPLE', 'JUSTICE', 'TRANSFER'],
+  },
+  {
+    movieId: 'tm-65',
+    movieTitle: 'Chokka Thangam',
+    indirectClues: ['SISTER', 'MARRIAGE', 'VILLAGE', 'GOLD', 'MLA'],
+  },
+  {
+    movieId: 'tm-66',
+    movieTitle: 'Dum',
+    indirectClues: ['IPS', 'COMMISSIONER', 'DAUGHTER', 'KIDNAP', 'JAIL'],
+  },
+  {
+    movieId: 'tm-67',
+    movieTitle: 'Winner',
+    indirectClues: ['VILLAGE', 'LANDLORD', 'GRANDPARENTS', 'RIVAL', 'RESCUE'],
+  },
+  {
+    movieId: 'tm-68',
+    movieTitle: 'Autograph',
+    indirectClues: ['MEMORY', 'WEDDING', 'KERALA', 'NOSTALGIA', 'INVITATION'],
+  },
+  {
+    movieId: 'tm-69',
+    movieTitle: 'Perazhagan',
+    indirectClues: ['HUNCHBACK', 'DUAL', 'VILLAGE', 'COLLEGE', 'GRANDMOTHER'],
+  },
+  {
+    movieId: 'tm-70',
+    movieTitle: 'Virumaandi',
+    indirectClues: ['JAILIKATTU', 'DEATH ROW', 'VERSION', 'TRUTH', 'INTERVIEW'],
+  },
+  {
+    movieId: 'tm-71',
+    movieTitle: 'Vasool Raja MBBS',
+    indirectClues: ['DON', 'MEDICAL', 'FATHER', 'HOSPITAL', 'LAUGHTER'],
+  },
+  {
+    movieId: 'tm-72',
+    movieTitle: 'Kovil',
+    indirectClues: ['TEMPLE', 'RELIGION', 'CHRISTIAN', 'FATHER', 'LOVE'],
+  },
+  {
+    movieId: 'tm-73',
+    movieTitle: 'Arul',
+    indirectClues: ['GOLDSMITH', 'MLA', 'BROTHER', 'CHAIN', 'REVENGE'],
+  },
 ];
 
 export const GENERIC_INDIRECT_CLUES = [
