@@ -532,6 +532,206 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
     movieTitle: 'Naan Kadavul',
     indirectClues: ['AGHORI', 'BEGGAR', 'MERCY', 'KASHI', 'SACRIFICE'],
   },
+  {
+    movieId: 'tm-106',
+    movieTitle: 'Velaiyilla Pattathari',
+    indirectClues: ['ENGINEER', 'UNEMPLOYED', 'AMBITION', 'SUCCESS', 'FAMILY'],
+  },
+  {
+    movieId: 'tm-107',
+    movieTitle: 'Goli Soda',
+    indirectClues: ['MARKET', 'YOUTH', 'BUSINESS', 'STRUGGLE', 'FRIENDSHIP'],
+  },
+  {
+    movieId: 'tm-108',
+    movieTitle: 'Cuckoo',
+    indirectClues: ['BLIND', 'LOVE', 'VILLAGE', 'SILENCE', 'MUSIC'],
+  },
+  {
+    movieId: 'tm-109',
+    movieTitle: 'Thegidi',
+    indirectClues: ['DICE', 'INSURANCE', 'INVESTIGATION', 'TRAP', 'MYSTERY'],
+  },
+  {
+    movieId: 'tm-110',
+    movieTitle: 'Madras',
+    indirectClues: ['WALL', 'POLITICS', 'NORTH', 'COMMUNITY', 'PAINTING'],
+  },
+  {
+    movieId: 'tm-111',
+    movieTitle: 'Kaaviya Thalaivan',
+    indirectClues: ['THEATRE', 'RIVALRY', 'BRITISH', 'STAGE', 'MUSIC'],
+  },
+  {
+    movieId: 'tm-112',
+    movieTitle: 'Nimirndhu Nil',
+    indirectClues: ['CORRUPTION', 'DUAL', 'VIGILANTE', 'JUSTICE', 'SYSTEM'],
+  },
+  {
+    movieId: 'tm-113',
+    movieTitle: 'Bramman',
+    indirectClues: ['THEATRE', 'FRIENDSHIP', 'DIRECTOR', 'DREAM', 'CINEMA'],
+  },
+  {
+    movieId: 'tm-114',
+    movieTitle: 'Yaamirukka Bayamey',
+    indirectClues: ['HOTEL', 'GHOST', 'HILL', 'LAUGHTER', 'FEAR'],
+  },
+  {
+    movieId: 'tm-115',
+    movieTitle: 'Mundasupatti',
+    indirectClues: ['CAMERA', 'VILLAGE', 'SUPERSTITION', 'PHOTOGRAPH', 'PERIOD'],
+  },
+  {
+    movieId: 'tm-116',
+    movieTitle: 'Naan Sigappu Manithan',
+    indirectClues: ['NARCOLEPSY', 'SLEEP', 'POLICE', 'REVENGE', 'DISORDER'],
+  },
+  {
+    movieId: 'tm-117',
+    movieTitle: 'Tenaliraman',
+    indirectClues: ['JESTER', 'KING', 'WIT', 'KINGDOM', 'COMEDY'],
+  },
+  {
+    movieId: 'tm-118',
+    movieTitle: 'Kaaki Sattai',
+    indirectClues: ['POLICE', 'ORGAN', 'TRAFFICKING', 'UNIFORM', 'NURSE'],
+  },
+  {
+    movieId: 'tm-119',
+    movieTitle: '36 Vayadhinile',
+    indirectClues: ['COMEBACK', 'HOUSEWIFE', 'IDENTITY', 'EMPOWERMENT', 'JOB'],
+  },
+  {
+    movieId: 'tm-120',
+    movieTitle: 'Uttama Villain',
+    indirectClues: ['ACTOR', 'CANCER', 'FOLK', 'MENTOR', 'FINALE'],
+  },
+  {
+    movieId: 'tm-121',
+    movieTitle: 'Puli',
+    indirectClues: ['TIGER', 'QUEEN', 'MAGIC', 'KINGDOM', 'FANTASY'],
+  },
+  {
+    movieId: 'tm-122',
+    movieTitle: 'Massu Engira Masilamani',
+    indirectClues: ['GHOST', 'CONMAN', 'REVENGE', 'DUAL', 'SPIRIT'],
+  },
+  {
+    movieId: 'tm-123',
+    movieTitle: 'Trisha Illana Nayanthara',
+    indirectClues: ['TEENAGER', 'BREAKUP', 'ADULT', 'REALIZATION', 'ROMANCE'],
+  },
+  {
+    movieId: 'tm-124',
+    movieTitle: '24',
+    indirectClues: ['TIME', 'WATCH', 'SCIENTIST', 'VILLAIN', 'TRAVEL'],
+  },
+  {
+    movieId: 'tm-125',
+    movieTitle: 'Iru Mugan',
+    indirectClues: ['TRANSGENDER', 'SPY', 'VIRUS', 'DUAL', 'MALAYSIA'],
+  },
+  {
+    movieId: 'tm-126',
+    movieTitle: 'Achcham Yenbadhu Madamaiyada',
+    indirectClues: ['ROADTRIP', 'ACCIDENT', 'GANGSTER', 'PROTECT', 'LOVE'],
+  },
+  {
+    movieId: 'tm-127',
+    movieTitle: 'Kadhalum Kadandhu Pogum',
+    indirectClues: ['ROWYD', 'IT', 'UNEMPLOYED', 'NEIGHBOR', 'ROMANCE'],
+  },
+  {
+    movieId: 'tm-128',
+    movieTitle: 'Kadavul Irukaan Kumaru',
+    indirectClues: ['WEDDING', 'LIQUOR', 'FRIEND', 'CHAOS', 'COMEDY'],
+  },
+  {
+    movieId: 'tm-129',
+    movieTitle: 'Miruthan',
+    indirectClues: ['ZOMBIE', 'VIRUS', 'COP', 'ANTIDOTE', 'SURVIVAL'],
+  },
+  {
+    movieId: 'tm-130',
+    movieTitle: 'Taramani',
+    indirectClues: ['IT', 'RELATIONSHIP', 'MODERN', 'EGO', 'CHENNAI'],
+  },
+  {
+    movieId: 'tm-131',
+    movieTitle: 'Theeran Adhigaaram Ondru',
+    indirectClues: ['POLICE', 'DACOIT', 'FINGERPRINT', 'REAL', 'INVESTIGATION'],
+  },
+  {
+    movieId: 'tm-132',
+    movieTitle: 'Aval',
+    indirectClues: ['HAUNTED', 'NEIGHBOR', 'POSSESSION', 'CHILD', 'SURGERY'],
+  },
+  {
+    movieId: 'tm-133',
+    movieTitle: 'Magalir Mattum',
+    indirectClues: ['FRIENDSHIP', 'REUNION', 'PATRIARCHY', 'WOMEN', 'FREEDOM'],
+  },
+  {
+    movieId: 'tm-134',
+    movieTitle: 'Dharala Prabhu',
+    indirectClues: ['SPERM', 'DONOR', 'FERTILITY', 'FAMILY', 'CLINIC'],
+  },
+  {
+    movieId: 'tm-135',
+    movieTitle: 'Ponmagal Vandhal',
+    indirectClues: ['LAWYER', 'COURT', 'CHILD', 'TRUTH', 'JUSTICE'],
+  },
+  {
+    movieId: 'tm-136',
+    movieTitle: 'Kannum Kannum Kollaiyadithaal',
+    indirectClues: ['SCAM', 'HACKER', 'GOA', 'TWIST', 'ROMANCE'],
+  },
+  {
+    movieId: 'tm-137',
+    movieTitle: 'Oh My Kadavule',
+    indirectClues: ['SECOND', 'CHANCE', 'GOD', 'MARRIAGE', 'DIVORCE'],
+  },
+  {
+    movieId: 'tm-138',
+    movieTitle: 'Penguin',
+    indirectClues: ['PREGNANT', 'KIDNAP', 'MYSTERY', 'MOTHER', 'MOUNTAIN'],
+  },
+  {
+    movieId: 'tm-139',
+    movieTitle: 'Walter',
+    indirectClues: ['COP', 'BABY', 'KIDNAP', 'CONSPIRACY', 'INVESTIGATION'],
+  },
+  {
+    movieId: 'tm-140',
+    movieTitle: 'Utraan',
+    indirectClues: ['COLLEGE', 'POLICE', 'GOON', 'SEPARATION', 'LOVE'],
+  },
+  {
+    movieId: 'tm-141',
+    movieTitle: 'Vidaa Muyarchi',
+    indirectClues: ['DESERT', 'WIFE', 'MISSING', 'AZERBAIJAN', 'SEARCH'],
+  },
+  {
+    movieId: 'tm-142',
+    movieTitle: 'Retro',
+    indirectClues: ['GANGSTER', 'PAST', 'PEACE', 'GOLD', 'PROMISE'],
+  },
+  {
+    movieId: 'tm-143',
+    movieTitle: 'Thug Life',
+    indirectClues: ['GANGSTER', 'FAMILY', 'BETRAYAL', 'LEGACY', 'EMPIRE'],
+  },
+  {
+    movieId: 'tm-144',
+    movieTitle: 'Coolie',
+    indirectClues: ['GOLD', 'SMUGGLING', 'WATCH', 'DEVA', 'PORT'],
+  },
+  {
+    movieId: 'tm-145',
+    movieTitle: 'Jana Nayagan',
+    indirectClues: ['LEADER', 'POLITICS', 'FINAL', 'CM', 'VOTERS'],
+  },
 ];
 
 export const GENERIC_INDIRECT_CLUES = [
