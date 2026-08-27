@@ -367,10 +367,115 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
     movieTitle: 'Kovil',
     indirectClues: ['TEMPLE', 'RELIGION', 'CHRISTIAN', 'FATHER', 'LOVE'],
   },
+{
+    movieId: 'tm-50',
+    movieTitle: 'Papanasam',
+    indirectClues: ['COVERUP', 'CABLE', 'POLICE', 'FAMILY', 'ALIBI'],
+  },
   {
-    movieId: 'tm-73',
-    movieTitle: 'Arul',
-    indirectClues: ['GOLDSMITH', 'MLA', 'BROTHER', 'CHAIN', 'REVENGE'],
+    movieId: 'tm-74',
+    movieTitle: 'Chandramukhi',
+    indirectClues: ['MANSION', 'GHOST', 'PSYCHOLOGIST', 'DANCER', 'TWIN'],
+  },
+  {
+    movieId: 'tm-75',
+    movieTitle: 'Thirupaachi',
+    indirectClues: ['BROTHER', 'VILLAGE', 'JUSTICE', 'POLICE', 'CHENNAI'],
+  },
+  {
+    movieId: 'tm-76',
+    movieTitle: 'Sivakasi',
+    indirectClues: ['FACTORY', 'FIREWORKS', 'BROTHER', 'RIVAL', 'FIRE'],
+  },
+  {
+    movieId: 'tm-77',
+    movieTitle: 'Sandakozhi',
+    indirectClues: ['TRAIN', 'VILLAGE', 'RIVAL', 'SISTER', 'PROTECT'],
+  },
+  {
+    movieId: 'tm-78',
+    movieTitle: 'Sachein',
+    indirectClues: ['COLLEGE', 'LOVE', 'FRIEND', 'WAIT', 'REJECTION'],
+  },
+  {
+    movieId: 'tm-79',
+    movieTitle: 'Aaru',
+    indirectClues: ['FRIEND', 'POLITICS', 'REVENGE', 'CHENNAI', 'BROTHER'],
+  },
+  {
+    movieId: 'tm-80',
+    movieTitle: 'Varalaru',
+    indirectClues: ['FATHER', 'SON', 'WHEELCHAIR', 'IDENTITY', 'TRIPLE'],
+  },
+  {
+    movieId: 'tm-81',
+    movieTitle: 'Vettaiyaadu Vilaiyaadu',
+    indirectClues: ['POLICE', 'SERIAL', 'KILLER', 'NEW YORK', 'WIFE'],
+  },
+  {
+    movieId: 'tm-82',
+    movieTitle: 'Sillunu Oru Kaadhal',
+    indirectClues: ['MARRIAGE', 'MEMORY', 'FIRST LOVE', 'REGRET', 'COLLEGE'],
+  },
+  {
+    movieId: 'tm-83',
+    movieTitle: 'Thimiru',
+    indirectClues: ['COLLEGE', 'RIVAL', 'SISTER', 'PROTECT', 'GANGSTER'],
+  },
+  {
+    movieId: 'tm-84',
+    movieTitle: 'Unakkum Enakkum',
+    indirectClues: ['AUSTRALIA', 'VILLAGE', 'PRIDE', 'FAMILY', 'RICH'],
+  },
+  {
+    movieId: 'tm-85',
+    movieTitle: 'Vallavan',
+    indirectClues: ['COLLEGE', 'OBSESSION', 'TEACHER', 'PAST', 'REJECTION'],
+  },
+  {
+    movieId: 'tm-86',
+    movieTitle: 'Veyil',
+    indirectClues: ['BROTHER', 'VILLAGE', 'FIRE', 'SACRIFICE', 'FAMILY'],
+  },
+  {
+    movieId: 'tm-87',
+    movieTitle: 'Paruthiveeran',
+    indirectClues: ['VILLAGE', 'CASTE', 'LOVE', 'TRAGEDY', 'KNIFE'],
+  },
+  {
+    movieId: 'tm-88',
+    movieTitle: 'Imsai Arasan 23rd Pulikecei',
+    indirectClues: ['KING', 'COMEDY', 'BRITISH', 'MINISTER', 'TWIN'],
+  },
+  {
+    movieId: 'tm-89',
+    movieTitle: 'Pokkiri',
+    indirectClues: ['UNDERCOVER', 'GANGSTER', 'POLICE', 'ROMANCE', 'IDENTITY'],
+  },
+  {
+    movieId: 'tm-90',
+    movieTitle: 'Vel',
+    indirectClues: ['BROTHER', 'TEMPLE', 'VILLAGE', 'REVENGE', 'DISGUISE'],
+  },
+  {
+    movieId: 'tm-91',
+    movieTitle: 'Unnale Unnale',
+    indirectClues: ['MELBOURNE', 'FRIEND', 'JEALOUSY', 'REALIZATION', 'PARTNER'],
+  },
+  {
+    movieId: 'tm-92',
+    movieTitle: 'Mozhi',
+    indirectClues: ['DEAF', 'MUSIC', 'TEACHER', 'FRIENDSHIP', 'SILENCE'],
+  },
+  {
+    movieId: 'tm-93',
+    movieTitle: 'Polladhavan',
+    indirectClues: ['BIKE', 'GANGSTER', 'FATHER', 'REVENGE', 'LOAN'],
+  },
+  {
+    movieId: 'tm-94',
+    movieTitle: 'Chennai 600028',
+    indirectClues: ['CRICKET', 'FRIENDS', 'CHILDHOOD', 'RIVALRY', 'TEAM'],
   },
 ];
 
