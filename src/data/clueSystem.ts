@@ -477,6 +477,61 @@ export const MOVIE_INDIRECT_CLUES: MovieClueSet[] = [
     movieTitle: 'Chennai 600028',
     indirectClues: ['CRICKET', 'FRIENDS', 'CHILDHOOD', 'RIVALRY', 'TEAM'],
   },
+  {
+    movieId: 'tm-95',
+    movieTitle: 'Dasavatharam',
+    indirectClues: ['VIRUS', 'TSUNAMI', 'AVATAR', 'SCIENTIST', 'IDENTITY'],
+  },
+  {
+    movieId: 'tm-96',
+    movieTitle: 'Subramaniapuram',
+    indirectClues: ['MADURAI', 'FRIENDSHIP', 'BETRAYAL', 'VIOLENCE', 'KARMA'],
+  },
+  {
+    movieId: 'tm-97',
+    movieTitle: 'Santosh Subramaniam',
+    indirectClues: ['FATHER', 'LOVE', 'MARRIAGE', 'FREEDOM', 'CHOICE'],
+  },
+  {
+    movieId: 'tm-98',
+    movieTitle: 'Saroja',
+    indirectClues: ['KIDNAP', 'FRIENDS', 'ROAD', 'CRIME', 'RESCUE'],
+  },
+  {
+    movieId: 'tm-99',
+    movieTitle: 'Abhiyum Naanum',
+    indirectClues: ['FATHER', 'DAUGHTER', 'MARRIAGE', 'GROWTH', 'LETTING GO'],
+  },
+  {
+    movieId: 'tm-100',
+    movieTitle: 'Kanchivaram',
+    indirectClues: ['WEAVER', 'SILK', 'COMMUNISM', 'DAUGHTER', 'JAIL'],
+  },
+  {
+    movieId: 'tm-101',
+    movieTitle: 'Aadhavan',
+    indirectClues: ['ASSASSIN', 'JUDGE', 'FAMILY', 'REDEMPTION', 'IDENTITY'],
+  },
+  {
+    movieId: 'tm-102',
+    movieTitle: 'Naadodigal',
+    indirectClues: ['FRIENDSHIP', 'LOVE', 'SACRIFICE', 'BETRAYAL', 'JUSTICE'],
+  },
+  {
+    movieId: 'tm-103',
+    movieTitle: 'Vettaikaaran',
+    indirectClues: ['POLICE', 'VIGILANTE', 'VILLAGE', 'JUSTICE', 'REVENGE'],
+  },
+  {
+    movieId: 'tm-104',
+    movieTitle: 'Unnaipol Oruvan',
+    indirectClues: ['BOMB', 'TERRORIST', 'COMMISSIONER', 'NEGOTIATION', 'TIME'],
+  },
+  {
+    movieId: 'tm-105',
+    movieTitle: 'Naan Kadavul',
+    indirectClues: ['AGHORI', 'BEGGAR', 'MERCY', 'KASHI', 'SACRIFICE'],
+  },
 ];
 
 export const GENERIC_INDIRECT_CLUES = [
